@@ -1,0 +1,9 @@
+# Terraform secrets and states
+terraform.tfvars
+*.pem
+*.pem.pub
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+

@@ -11,20 +11,19 @@ This repository contains a modularized Terraform project that provisions multipl
 
 ## <h2>Project Structure 
 
-INSTANCE_CREATION/
-├── main.tf                  - Module call
-├── provider.tf              - AWS credentials
-├── variable.tf              - Input variable declarations
-├── output.tf                - Root outputs from module
-├── terraform.tfvars         - Actual values (DO NOT push this to GitHub)
-├── nginx.sh
-├── terraform-key.pem
-├── terraform-key.pem.pub
-├── modules/
-│   └── ec2_instance/
-│       ├── main.tf          - All EC2, SG, keypair logic
-│       ├── variable.tf      - Declares input variables
-│       ├── output.tf        - Outputs defined from EC2 resources
+├── main.tf # Root module invoking ec2_instance module
+├── provider.tf # AWS provider configuration
+├── variable.tf # Variable declarations at root
+├── output.tf # Outputs returned from the module
+├── terraform.tfvars # Sensitive variable values (not pushed to GitHub)
+├── nginx.sh # Script to install NGINX on EC2 instances
+├── terraform-key.pem # SSH private key (ignored)
+├── terraform-key.pem.pub # SSH public key (ignored)
+└── modules/
+└── ec2_instance/
+├── main.tf # EC2, security group, key pair, and user data logic
+├── variable.tf # Variable declarations for the module
+└── output.tf # Outputs from the EC2 resource
 
 
 ## Features
@@ -65,3 +64,31 @@ ec2_instances = {
 3. Initialize Terraform using terraform init
 4. Plan the Infrastructure using terraform plan
 5. Apply the Configuration using terraform apply
+
+Outputs:
+After apply, the following values are displayed:
+
+EC2 instance IDs
+
+Public IP addresses
+
+Private IP addresses
+
+Public DNS names
+
+Security:
+To protect your AWS credentials and private keys:
+
+Never push terraform.tfvars or .pem files to GitHub.
+
+This project uses .gitignore to exclude sensitive files:
+
+terraform.tfvars
+
+*.pem
+
+.terraform/
+
+.terraform.lock.hcl
+
+*.tfstate and backups
